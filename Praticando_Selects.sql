@@ -49,10 +49,14 @@ values (1, 'Pedro Cabral', '12345678991'),
 insert into Pessoa_Fisica
 select Id_pessoa, Nome_pessoa, Cpf_pessoa from Pessoa;
 
+insert into Setor
+values ('Marketing');
+
 drop table Setor
 drop table funcionario
 select * from Pessoa_Fisica
 select * from Funcionario
+select * from setor
 
 select *
 from Funcionario
@@ -72,3 +76,47 @@ order by CodSetor_funcionario, PrimeiroNome_funcionario
 select f.PrimeiroNome_funcionario, f.Salario_funcionario, s.Nome_setor
 from Funcionario f, Setor s
 where f.CodSetor_funcionario = s.Cod_setor
+
+select f.PrimeiroNome_funcionario, f.Salario_funcionario, s.Nome_setor
+from Funcionario f
+inner join Setor s on f.CodSetor_funcionario = s.Cod_setor
+
+select f.PrimeiroNome_funcionario, f.Salario_funcionario, s.Nome_setor
+from Funcionario f
+left outer join Setor s on f.CodSetor_funcionario = s.Cod_setor
+
+select f.PrimeiroNome_funcionario, f.Salario_funcionario, s.Nome_setor
+from Funcionario f
+right outer join Setor s on f.CodSetor_funcionario = s.Cod_setor
+
+select f.PrimeiroNome_funcionario, f.Salario_funcionario, s.Nome_setor
+from Funcionario f
+inner join Setor s on f.CodSetor_funcionario = s.Cod_setor
+where f.CodSetor_funcionario is null
+
+select f.PrimeiroNome_funcionario, f.Salario_funcionario, s.Nome_setor
+from Funcionario f
+full outer join Setor s on f.CodSetor_funcionario = s.Cod_setor
+
+select f.PrimeiroNome_funcionario, f.Salario_funcionario, s.Nome_setor
+from Funcionario f
+full outer join Setor s on f.CodSetor_funcionario = s.Cod_setor
+where f.CodSetor_funcionario is null or s.Cod_setor is null
+
+select f.PrimeiroNome_funcionario, f.Salario_funcionario, s.Nome_setor
+from Funcionario f
+cross join Setor s
+order by f.Primeironome_funcionario
+
+select min(Salario_funcionario) as 'Menor salario', max(Salario_funcionario) as 'Maior salario'
+from Funcionario
+
+select sum(Salario_funcionario) as 'Soma dos salarios'
+from funcionario
+where CodSetor_funcionario = 3
+
+select avg(Salario_funcionario) as 'Media Salario'
+from Funcionario
+
+select count(*) from Funcionario
+where Salario_funcionario > 2500
