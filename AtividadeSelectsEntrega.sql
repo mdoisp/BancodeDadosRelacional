@@ -20,7 +20,7 @@ select count(*) from clientes
 where sexo = 'F'
 
 /*7. Mostre as categorias de filmes que a locadora possui mostrando o nome da categoria em ordem alfabética.*/
-select * from categoria;
+select * from categoria
 where nome_categoria is not null
 order by nome_categoria asc
 
@@ -59,20 +59,29 @@ from filme f inner join locacoes l on f.cod_filme = l.cod_filme inner join clien
 where c.nome = 'Renata Cristina'
 
 /*16. Mostre todos os clientes que já alugaram mais do que 3 filmes.*/
-select c.nome
+select c.nome as Nome
 from locacoes l inner join clientes c on l.cod_cliente = c.cod_cliente
 group by c.nome
 having count(l.cod_cliente) > 3
 
 /*17. Mostre quanto foi gasto pelo cliente Renata Cristina.*/
-
+select sum(valor_locacao) as 'Valor Total'
+from filme f inner join locacoes l on f.cod_filme = l.cod_filme inner join clientes c on l.cod_cliente = c.cod_cliente
+where c.nome = 'Renata Cristina'
 
 /*18. Mostre a média de valor de locação da locadora.*/
-
+select avg(valor_locacao) as 'Média de valores'
+from filme f inner join locacoes l on f.cod_filme = l.cod_filme
 
 /*19. Mostre o menor valor de locação da locadora.*/
-
+select min(valor_locacao) as 'Menor valor'
+from filme f inner join locacoes l on f.cod_filme = l.cod_filme
 
 /*20. Mostre a quantidade de filme que a locadora possui por categoria.*/
+select count(c.nome_categoria), c.nome_categoria
+from categoria c inner join filme f on c.cod_categoria = f.cod_categoria
+group by c.nome_categoria
 
-select * from locacoes
+select * from filme
+select * from locacoes where cod_filme = 15
+select * from clientes
