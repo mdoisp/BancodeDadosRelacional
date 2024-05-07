@@ -13,10 +13,8 @@ where NOME_CATEGORIA = 'Ação' and DIRETOR = 'Richard Donner' and cli.NOME = 'Eds
 
 /*3. Mostre o nome do filme, seu valor de locação, um campo chamado desconto onde deve aparecer o valor de 10% de desconto em cima
 do valor de locação e um campo chamado valor_final que deve possuir valor de locação menos os dez por cento de desconto dado.*/
-select f.FILME, f.VALOR_LOCACAO, f.VALOR_LOCACAO as Desconto, f.VALOR_LOCACAO as PrecoFinal
+select f.FILME, f.VALOR_LOCACAO, f.VALOR_LOCACAO * 0.1 as Desconto, f.VALOR_LOCACAO - (VALOR_LOCACAO * 0.1) as PrecoFinal
 from FILME f
-where f.VALOR_LOCACAO in
-	(select f.VALOR_LOCACAO * 0.1)
 
 /*4. Mostre sem repetição de registros, todos os filmes alugados por clientes da cidade de Votorantim.*/
 select distinct f.FILME
