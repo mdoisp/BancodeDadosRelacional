@@ -2,7 +2,6 @@
 select COD_FILME, Quantidade = count(*) 
 from LOCACOES
 group by COD_FILME
-having count(COD_FILME) > 0
 
 /*2. Mostre o nome e a data de devolução de todos os filmes de Ação cujo diretor seja Richard Donner que foram alugados
 pelo cliente Edson Martin Feitosa.*/
@@ -32,13 +31,31 @@ from FILME f inner join LOCACOES l on f.COD_FILME = l.COD_FILME
 where f.FILME = 'A vida é bela'
 
 /*7. Mostre a quantidade de saídas de filmes para locação agrupando a consulta por diretor.*/
+select f.DIRETOR, Quantidade = count(*)
+from LOCACOES l inner join FILME f on l.COD_FILME = f.COD_FILME
+group by f.DIRETOR
 
 /*8. Mostre todas as categorias dos filmes alugados pela cliente Maria Chiquinha.*/
+select distinct c.NOME_CATEGORIA
+from LOCACOES l inner join CLIENTES cli on l.COD_CLIENTE = cli.COD_CLIENTE inner join FILME f on f.COD_FILME = l.COD_FILME
+inner join CATEGORIA c on f.COD_CATEGORIA = c.COD_CATEGORIA
+where cli.NOME = 'Maria Chiquinha'
 
 /*9. Mostre o nome e o telefone de todos os clientes que já alugaram o filme Constantine.*/
+select cli.NOME, cli.TELEFONE
+from LOCACOES l inner join CLIENTES cli on l.COD_CLIENTE = cli.COD_CLIENTE inner join FILME f on f.COD_FILME = l.COD_FILME
+where f.FILME = 'Constantine'
 
 /*10. Mostre todas as categorias de filmes que não possuem filmes cadastrado*/
+select c.NOME_CATEGORIA
+from CATEGORIA c
+where c.COD_CATEGORIA not in
+	(select c.COD_CATEGORIA
+	from CATEGORIA c inner join FILME f on c.COD_CATEGORIA = f.COD_CATEGORIA
+	group by c.NOME_CATEGORIA, c.COD_CATEGORIA, f.COD_CATEGORIA
+	having c.COD_CATEGORIA = f.COD_CATEGORIA)
 
-
-select * from locacoes
-select * from filme
+select * from CLIENTES
+select * from LOCACOES
+select * from FILME
+select * from CATEGORIA
